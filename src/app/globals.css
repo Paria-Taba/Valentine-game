@@ -1,26 +1,41 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 240 100% 99%;
+    --foreground: 240 10% 20%;
+    --card: 240 100% 100%;
+    --card-foreground: 240 10% 20%;
+    --popover: 240 100% 100%;
+    --popover-foreground: 240 10% 20%;
+    --primary: 250 50% 70%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 240 67% 97%;
+    --secondary-foreground: 250 50% 30%;
+    --muted: 240 20% 94%;
+    --muted-foreground: 240 5% 45%;
+    --accent: 300 40% 90%;
+    --accent-foreground: 300 50% 20%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 30% 88%;
+    --input: 240 30% 92%;
+    --ring: 250 50% 60%;
+    --radius: 0.8rem;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  .dark {
+    --background: 240 10% 10%;
+    --foreground: 0 0% 98%;
+    --border: 240 10% 20%;
+    --input: 240 10% 20%;
+    --ring: 250 50% 70%;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
 }

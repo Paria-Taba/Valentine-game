@@ -1,0 +1,10 @@
+{
+  "placeholderImages": [
+    {
+      "id": "shared-moment",
+      "description": "Abstract representation of connection between two people",
+      "imageUrl": "https://images.unsplash.com/photo-1738082956257-06cde4444b1c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxhYnN0cmFjdCUyMGNvbm5lY3Rpb258ZW58MHx8fHwxNzY5NTA3MzkyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract connection"
+    }
+  ]
+}
