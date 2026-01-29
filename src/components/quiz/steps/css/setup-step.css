@@ -1,10 +1,9 @@
 .container-cart{
 	background-color: white;
-	margin: 40px;
 	border: 2px solid #ccc5ec;
 	border-radius: 10px;
 	padding: 5px;
-	
+	margin: 50px;
 }
 .container-cart>*{
 	margin: 4px;
@@ -23,23 +22,88 @@
 	
 }
 .container-cart button:hover{
-	background-color: #ccc5ec;
+	background-color: #998cd9;
 }
 .input input{
+	background-color:#fafaff;
 	padding: 10px;
 	margin: 10px;
 border-radius: 10px; 
-width: 90%;
+width: 94%;
+border: 1px solid #998cd9;
 }
-@media screen and (max-width:480px) {
-	.input input{
 
-width: 70%;
-}
-}
 .process{
 	border: 2px solid #ccc5ec;
 	border-radius: 10px;
 	padding: 10px;
 	margin: 10px;
+}
+.cart-description{
+	margin-bottom: 30px;
+	color: #6d6d78;
+}
+
+.cart-title{
+	margin-bottom: 20px;
+	color: black;
+	font-size: 20px;
+	font-weight: bold;
+}
+.radio-div>*
+{
+border: none;
+background-color: #fafaff;
+padding: 5px;
+margin: 10px;
+border-radius: 10px;
+border: 1px solid #998cd9;
+}
+.relation-margin{
+	width: 60%;
+	
+}
+.relation-center{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.span-cart{
+	color: #998cd9;
+	margin-bottom: 10px;
+	
+}
+.question-margin{
+	padding: 10px;
+}
+.input-flex{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 80px 80px;
+
+}
+@media screen and (max-width:700px) {
+	.input input{
+
+width: 90%;
+}
+}
+@media screen and (max-width:500px) {
+	.input input{
+
+width: 80%;
+
+}
+.relation-margin{
+	width: 90%;
+
+}
+.input-flex{
+
+	grid-template-columns: 1fr;
+	grid-template-rows: 80px 80px 80px 80px;
+
+}
+
+
 }

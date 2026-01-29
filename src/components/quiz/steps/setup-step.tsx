@@ -48,7 +48,7 @@ export function SetupStep() {
             <QuizConnectLogo className="h-12 w-12 text-primary"/>
             <h1 className="text-4xl font-bold font-headline">{t.welcomeTitle[language]}</h1>
         </div>
-        <CardDescription>
+        <CardDescription className='cart-description'>
           {t.welcomeDescription[language]}
         </CardDescription>
       </CardHeader>

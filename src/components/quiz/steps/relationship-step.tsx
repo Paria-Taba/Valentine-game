@@ -33,23 +33,25 @@ export function RelationshipStep() {
   };
 
   return (
-	<div className='container-cart'>
+	<div className='relation-center'>
+	<div className='container-cart relation-margin'>
 		<Card className="w-full max-w-md mx-auto animate-fade-in">
       <CardHeader>
-        <CardTitle className="text-center font-headline text-2xl">
+        <CardTitle className="text-center font-headline text-2xl cart-title">
           {t.relationshipTitle[language]}
         </CardTitle>
-        <CardDescription className="text-center">
+        <CardDescription className="text-center cart-description">
           {t.relationshipDescription[language]
             .replace('{currentUser}', session.userAName)
             .replace('{partnerUser}', session.userBName)}
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <RadioGroup
+		
+			<RadioGroup
           value={selectedValue}
           onValueChange={setSelectedValue}
-          className="space-y-4"
+          className="space-y-4 radio-div"
         >
           {relationshipOptions.map((option) => (
             <div key={option} className="flex items-center space-x-3 bg-secondary p-3 rounded-md">
@@ -68,7 +70,7 @@ export function RelationshipStep() {
         </Button>
       </CardFooter>
     </Card>
-	</div>
+	</div></div>
     
   );
 }

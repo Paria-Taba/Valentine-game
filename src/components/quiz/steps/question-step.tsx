@@ -89,12 +89,12 @@ export function QuestionStep() {
   const partnerProgress = (partnerAnswers.length / totalQuestions) * 100;
 
   return (
-<div className='container-cart'>
+<div className='container-cart question-margin'>
     <div className="mx-auto w-full max-w-2xl space-y-6 ">
       <Card className="w-full animate-fade-in-up">
         <CardHeader>
           <div className="mb-2 flex items-center justify-between">
-            <span className="text-sm font-medium text-primary">
+            <span className="text-sm font-medium text-primary span-cart">
               {questionInfo.topic}
             </span>
             <span className="text-sm text-muted-foreground">
@@ -103,16 +103,16 @@ export function QuestionStep() {
                 .replace('{total}', String(totalQuestions))}
             </span>
           </div>
-          <CardTitle className="font-headline text-2xl">
+          <CardTitle className="font-headline text-2xl cart-title">
             {questionTitle}
           </CardTitle>
-          <CardDescription className="pt-2 text-lg">
+          <CardDescription className="pt-2 text-lg cart-description">
             {questionText}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="input-flex">
               {questionInfo.options.map((option) => (
                 <Button
                   key={option.de}
