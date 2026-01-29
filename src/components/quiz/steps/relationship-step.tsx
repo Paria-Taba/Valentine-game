@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { translations } from '@/lib/translations';
+import "./css/setup-step.css"
 
 const relationshipOptions = [
   'Liebespaar',
@@ -32,7 +33,8 @@ export function RelationshipStep() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto animate-fade-in">
+	<div className='container-cart'>
+		<Card className="w-full max-w-md mx-auto animate-fade-in">
       <CardHeader>
         <CardTitle className="text-center font-headline text-2xl">
           {t.relationshipTitle[language]}
@@ -66,5 +68,7 @@ export function RelationshipStep() {
         </Button>
       </CardFooter>
     </Card>
+	</div>
+    
   );
 }
