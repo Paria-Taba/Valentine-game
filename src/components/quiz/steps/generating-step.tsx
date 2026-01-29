@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Terminal } from 'lucide-react';
 import { translations } from '@/lib/translations';
+import "./css/setup-step.css"
 
 export function GeneratingStep() {
   const { session, userAnswers, partnerAnswers, userRole, setGeneratedImage, generatedImageUrl, language } = useQuiz();
@@ -46,7 +47,8 @@ export function GeneratingStep() {
   }, [session, userAnswers, partnerAnswers, userRole, setGeneratedImage, generatedImageUrl, language, t.generationError]);
 
   return (
-    <Card className="w-full max-w-md mx-auto animate-fade-in">
+	<div className='container-cart'>
+		 <Card className="w-full max-w-md mx-auto animate-fade-in">
         <CardHeader>
             <CardTitle className="text-center">{t.generatingTitle[language]}</CardTitle>
         </CardHeader>
@@ -64,5 +66,7 @@ export function GeneratingStep() {
         )}
       </CardContent>
     </Card>
+	</div>
+   
   );
 }

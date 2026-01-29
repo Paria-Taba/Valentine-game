@@ -102,7 +102,12 @@ padding: 10px;
 	background-color: white;
 	border: none;
 	margin-bottom: 20px;
-	width: 60%;
+	padding: 5px;
+	cursor: pointer;
+}
+.aside button:hover{
+	background-color:#f0dbf0 ;
+	border-radius: 5px;
 }
 .aside a{
 	color: black;
@@ -116,6 +121,11 @@ padding: 10px;
 .seperate{
 	margin-top: 200px;
 	border-top: 1px solid rgb(169, 167, 167);
+	padding: 5px;
+}
+.aside a:hover{
+	background-color:#f0dbf0 ;
+	border-radius: 5px;
 }
 @media screen and (max-width:700px) {
 	.input input{

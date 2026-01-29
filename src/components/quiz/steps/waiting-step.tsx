@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Progress } from '@/components/ui/progress';
 import { Hourglass } from 'lucide-react';
 import { translations } from '@/lib/translations';
+import"./css/setup-step.css"
 
 export function WaitingStep() {
   const { session, partnerAnswers, userRole, language } = useQuiz();
@@ -31,7 +32,8 @@ export function WaitingStep() {
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto animate-fade-in">
+	<div className='container-cart'>
+		<Card className="w-full max-w-md mx-auto animate-fade-in">
       <CardHeader>
         <CardTitle className="text-center font-headline">{t.waitingTitle[language]}</CardTitle>
         <CardDescription className="text-center">
@@ -51,5 +53,7 @@ export function WaitingStep() {
         </div>
       </CardContent>
     </Card>
+	</div>
+    
   );
 }

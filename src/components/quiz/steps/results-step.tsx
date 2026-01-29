@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { translations } from '@/lib/translations';
 import { QUIZ_QUESTIONS, MCQuestion } from '@/lib/quiz-data';
 import type { Answer } from '@/lib/types';
+import "./css/setup-step.css"
 
 export function ResultsStep() {
   const { session, language, userAnswers, partnerAnswers, userRole, generatedImageUrl } = useQuiz();
@@ -69,7 +70,8 @@ export function ResultsStep() {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto space-y-6">
+	<div className='container-cart'>
+		<div className="w-full max-w-2xl mx-auto space-y-6">
       <Card className="overflow-hidden animate-fade-in">
         <CardHeader className="text-center">
           <CardTitle className="font-headline text-3xl">{t.resultsTitle[language]}</CardTitle>
@@ -122,5 +124,7 @@ export function ResultsStep() {
         </CardFooter>
       </Card>
     </div>
+	</div>
+    
   );
 }
