@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { QuizConnectLogo } from '@/components/icons';
 import { Loader2 } from 'lucide-react';
 import { translations } from '@/lib/translations';
+import "./css/setup-step.css"
 
 export function SetupStep() {
   const [userAName, setUserAName] = useState('');
@@ -36,8 +37,9 @@ export function SetupStep() {
   };
 
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader className="text-center">
+	<div className='container-cart'>
+		 <Card className="w-full max-w-md">
+      <CardHeader className="text-center cart-header">
         <div className="flex justify-center gap-4 mb-4">
             <Button variant={language === 'de' ? 'default' : 'outline'} onClick={() => setLanguage('de')}>Deutsch</Button>
             <Button variant={language === 'en' ? 'default' : 'outline'} onClick={() => setLanguage('en')}>English</Button>
@@ -51,7 +53,7 @@ export function SetupStep() {
         </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 input">
           <div className="space-y-2">
             <Label htmlFor="userAName">{t.yourNameLabel[language]}</Label>
             <Input
@@ -74,12 +76,14 @@ export function SetupStep() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button type="submit" className="w-full" disabled={isLoading || !userAName || !userBName}>
+          <Button type="submit"className="w-full" disabled={isLoading || !userAName || !userBName}>
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {t.continueButton[language]}
           </Button>
         </CardFooter>
       </form>
     </Card>
+	</div>
+   
   );
 }

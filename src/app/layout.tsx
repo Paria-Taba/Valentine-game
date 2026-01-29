@@ -26,7 +26,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-body antialiased min-h-screen">
+      <body className="font-body antialiased min-h-screen bg-[#f2f2fc] m-0 p-0">
         <FirebaseClientProvider>
           <QuizProvider>
             {children}

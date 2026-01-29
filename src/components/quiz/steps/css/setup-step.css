@@ -1,0 +1,39 @@
+.container-cart{
+	background-color: white;
+	margin: 40px;
+	border: 2px solid #ccc5ec;
+	border-radius: 10px;
+	padding: 5px;
+	
+}
+.container-cart>*{
+	margin: 4px;
+}
+.cart-header{
+	color: #2e1f6e;
+}
+
+.container-cart button{
+	padding: 10px;
+	margin: 10px;
+	border-radius: 10px;
+	cursor: pointer;
+	background-color: #fafaff;
+	border: 1px solid #ccc5ec;
+	
+}
+.container-cart button:hover{
+	background-color: #ccc5ec;
+}
+.input input{
+	padding: 10px;
+	margin: 10px;
+border-radius: 10px; 
+width: 90%;
+}
+@media screen and (max-width:480px) {
+	.input input{
+
+width: 70%;
+}
+}
