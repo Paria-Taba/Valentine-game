@@ -13,6 +13,7 @@ import { useQuiz } from '@/context/quiz-context';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
 import { translations } from '@/lib/translations';
+import "./steps/css/setup-step.css"
 
 export function QuizSidebar() {
   const { session, userRole, language } = useQuiz();
@@ -55,9 +56,9 @@ export function QuizSidebar() {
   };
 
   return (
-    <aside className="w-64 bg-card p-4 flex-col justify-between hidden md:flex">
+    <aside className="aside">
       <div>
-        <div className="flex items-center gap-2 mb-6">
+        <div className="flex items-center  mb-6 ">
           <QuizConnectLogo className="h-8 w-8 text-primary" />
           <h1 className="text-xl font-bold font-headline">QuizConnect</h1>
         </div>
@@ -89,7 +90,7 @@ export function QuizSidebar() {
         </div>
       </div>
       <div>
-        <Separator className="my-4" />
+        <Separator className="my-4 seperate" />
         <div className="space-y-2">
           <Button variant="ghost" className="w-full justify-start" asChild>
             <Link href="#tutorial">

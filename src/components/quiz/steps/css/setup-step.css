@@ -45,6 +45,7 @@ border: 1px solid #998cd9;
 }
 
 .cart-title{
+	margin-top: 10px;
 	margin-bottom: 20px;
 	color: black;
 	font-size: 20px;
@@ -82,10 +83,47 @@ border: 1px solid #998cd9;
 	grid-template-rows: 80px 80px;
 
 }
+
+.aside{
+	background-color: white;
+width: 20%;
+	display: flex;
+	flex-direction: column;
+	font-size: 14px;
+}
+aside h1{
+	font-size: 20px;
+}
+.aside>*{
+margin-top: 20px;
+padding: 10px;
+}
+.aside button{
+	background-color: white;
+	border: none;
+	margin-bottom: 20px;
+	width: 60%;
+}
+.aside a{
+	color: black;
+	text-decoration: none;
+
+}
+.aside svg{
+	margin-right: 10px;
+	width: 15px;
+}
+.seperate{
+	margin-top: 200px;
+	border-top: 1px solid rgb(169, 167, 167);
+}
 @media screen and (max-width:700px) {
 	.input input{
 
 width: 90%;
+}
+.aside{
+	display: none;
 }
 }
 @media screen and (max-width:500px) {
@@ -106,4 +144,9 @@ width: 80%;
 }
 
 
+}
+@media screen and (max-width:970px) {
+.aside{
+	width: 30%;
+}
 }
