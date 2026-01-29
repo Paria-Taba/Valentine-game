@@ -5,7 +5,7 @@ import { useQuiz } from '@/context/quiz-context';
 import { QUIZ_QUESTIONS } from '@/lib/quiz-data';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-
+import "./css/setup-step.css"
 import {
   Card,
   CardContent,
@@ -89,7 +89,7 @@ export function QuestionStep() {
   const partnerProgress = (partnerAnswers.length / totalQuestions) * 100;
 
   return (
-
+<div className='container-cart'>
     <div className="mx-auto w-full max-w-2xl space-y-6 ">
       <Card className="w-full animate-fade-in-up">
         <CardHeader>
@@ -140,7 +140,7 @@ export function QuestionStep() {
           </Button>
         </CardFooter>
       </Card>
-
+<div className='process'>
       <Card>
         <CardContent className="space-y-3 p-4">
           <div>
@@ -169,7 +169,7 @@ export function QuestionStep() {
             </p>
           )}
         </CardContent>
-      </Card>
-    </div>
+      </Card></div>
+    </div></div>
   );
 }

@@ -37,3 +37,9 @@ width: 90%;
 width: 70%;
 }
 }
+.process{
+	border: 2px solid #ccc5ec;
+	border-radius: 10px;
+	padding: 10px;
+	margin: 10px;
+}
