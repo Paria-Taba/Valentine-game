@@ -42,7 +42,11 @@ border: 1px solid #998cd9;
 	border: 2px solid #ccc5ec;
 	border-radius: 10px;
 	padding: 10px;
-	margin: 10px;
+	margin: 10px 50px 30px 50px;
+	background-color: white;
+}
+.process div{
+padding: 1px;
 }
 .cart-description{
 	margin-bottom: 30px;
@@ -81,6 +85,8 @@ border: 1px solid #998cd9;
 }
 .question-margin{
 	padding: 10px;
+	margin-bottom: 25px;
+
 }
 .input-flex{
 	display: grid;
