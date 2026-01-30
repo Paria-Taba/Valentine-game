@@ -32,7 +32,7 @@ export function WaitingStep() {
   }
 
   return (
-	<div className='container-cart'>
+	<div className='container-cart waiting-div'>
 		<Card className="w-full max-w-md mx-auto animate-fade-in">
       <CardHeader>
         <CardTitle className="text-center font-headline">{t.waitingTitle[language]}</CardTitle>

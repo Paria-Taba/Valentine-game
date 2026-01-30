@@ -70,7 +70,7 @@ export function ResultsStep() {
   };
 
   return (
-	<div className='container-cart'>
+	<div className='container-cart result-div'>
 		<div className="w-full max-w-2xl mx-auto space-y-6">
       <Card className="overflow-hidden animate-fade-in">
         <CardHeader className="text-center">

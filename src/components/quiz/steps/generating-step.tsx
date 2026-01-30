@@ -47,7 +47,7 @@ export function GeneratingStep() {
   }, [session, userAnswers, partnerAnswers, userRole, setGeneratedImage, generatedImageUrl, language, t.generationError]);
 
   return (
-	<div className='container-cart'>
+	<div className='container-cart generating-div'>
 		 <Card className="w-full max-w-md mx-auto animate-fade-in">
         <CardHeader>
             <CardTitle className="text-center">{t.generatingTitle[language]}</CardTitle>
@@ -59,7 +59,7 @@ export function GeneratingStep() {
         </p>
         {error && (
             <Alert variant="destructive">
-                <Terminal className="h-4 w-4" />
+                <Terminal className="h-4 w-4 " />
                 <AlertTitle>{t.errorTitle[language]}</AlertTitle>
                 <AlertDescription>{error}</AlertDescription>
             </Alert>
