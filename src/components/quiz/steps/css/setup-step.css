@@ -51,6 +51,7 @@ padding: 1px;
 .cart-description{
 	margin-bottom: 30px;
 	color: #6d6d78;
+	margin-top: 30px;
 }
 
 .cart-title{
@@ -144,15 +145,15 @@ padding: 10px;
 
 }
 .waiting-div{
-	margin: 200px;
+	margin: 100px;
 	padding: 50px;
 }
 .result-div{
-	margin: 200px;
+	margin: 100px;
 	padding: 50px;
 }
 .generating-div{
-	margin: 200px;
+	margin: 100px;
 	padding: 50px;
 }
 
