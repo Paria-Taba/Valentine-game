@@ -1,7 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+*{
+	margin: 0;
+}
 @layer base {
   :root {
     --background: 240 100% 99%;

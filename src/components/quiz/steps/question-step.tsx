@@ -89,6 +89,7 @@ export function QuestionStep() {
   const partnerProgress = (partnerAnswers.length / totalQuestions) * 100;
 
   return (
+	
 <div className='container-cart question-margin'>
     <div className="mx-auto w-full max-w-2xl space-y-6 ">
       <Card className="w-full animate-fade-in-up">
