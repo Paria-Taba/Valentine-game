@@ -9,6 +9,8 @@ import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { translations } from '@/lib/translations';
 import "./css/setup-step.css"
+import "./../../ValentineBackground"
+import ValentineBackground from './../../ValentineBackground';
 
 const relationshipOptions = [
   'Liebespaar',
@@ -34,6 +36,7 @@ export function RelationshipStep() {
 
   return (
 	<div className='relation-center'>
+		 <ValentineBackground />
 	<div className='container-cart relation-margin'>
 		<Card className="w-full max-w-md mx-auto animate-fade-in">
       <CardHeader>

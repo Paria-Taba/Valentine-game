@@ -1,0 +1,53 @@
+/* background */
+.valentine-bg {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #fdf1f6, #f2f2fc);
+  overflow: hidden;
+  z-index: -1;
+}
+
+/* heart base */
+.heart {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 105, 180, 0.25);
+  transform: rotate(45deg);
+  animation-name: float;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* heart circles */
+.heart::before,
+.heart::after {
+  content: '';
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  background: inherit;
+  border-radius: 50%;
+}
+
+.heart::before {
+  top: -14px;
+  left: 0;
+}
+
+.heart::after {
+  left: -14px;
+  top: 0;
+}
+
+/* animation */
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(45deg);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-120vh) rotate(405deg);
+    opacity: 0;
+  }
+}

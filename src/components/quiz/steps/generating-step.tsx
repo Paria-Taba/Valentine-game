@@ -9,6 +9,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Terminal } from 'lucide-react';
 import { translations } from '@/lib/translations';
 import "./css/setup-step.css"
+import ValentineBackground from '@/components/ValentineBackground';
 
 export function GeneratingStep() {
   const { session, userAnswers, partnerAnswers, userRole, setGeneratedImage, generatedImageUrl, language } = useQuiz();
@@ -46,7 +47,8 @@ export function GeneratingStep() {
     generate();
   }, [session, userAnswers, partnerAnswers, userRole, setGeneratedImage, generatedImageUrl, language, t.generationError]);
 
-  return (
+  return (<div>
+	<ValentineBackground />
 	<div className='container-cart generating-div'>
 		 <Card className="w-full max-w-md mx-auto animate-fade-in">
         <CardHeader>
@@ -67,6 +69,8 @@ export function GeneratingStep() {
       </CardContent>
     </Card>
 	</div>
+  </div>
+	
    
   );
 }

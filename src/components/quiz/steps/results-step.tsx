@@ -13,6 +13,7 @@ import { translations } from '@/lib/translations';
 import { QUIZ_QUESTIONS, MCQuestion } from '@/lib/quiz-data';
 import type { Answer } from '@/lib/types';
 import "./css/setup-step.css"
+import ValentineBackground from '@/components/ValentineBackground';
 
 export function ResultsStep() {
   const { session, language, userAnswers, partnerAnswers, userRole, generatedImageUrl } = useQuiz();
@@ -70,7 +71,9 @@ export function ResultsStep() {
   };
 
   return (
-	<div className='container-cart result-div'>
+	<div>
+		<ValentineBackground />
+		<div className='container-cart result-div'>
 		<div className="w-full max-w-2xl mx-auto space-y-6">
       <Card className="overflow-hidden animate-fade-in">
         <CardHeader className="text-center">
@@ -125,6 +128,8 @@ export function ResultsStep() {
       </Card>
     </div>
 	</div>
+	</div>
+	
     
   );
 }

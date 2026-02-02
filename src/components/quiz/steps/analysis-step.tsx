@@ -141,7 +141,9 @@ export function AnalysisStep() {
           const myGuessOnPartner = getAnswer(userAnswers, q.id, 'guess');
 
           return (
+			
             <AccordionItem value={`item-${q.id}`} key={q.id}>
+				
               <AccordionTrigger>
                 <div className="flex items-center gap-3">
                   <q.icon className="h-5 w-5 text-primary" />

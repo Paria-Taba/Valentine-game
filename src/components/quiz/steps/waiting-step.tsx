@@ -6,6 +6,7 @@ import { Progress } from '@/components/ui/progress';
 import { Hourglass } from 'lucide-react';
 import { translations } from '@/lib/translations';
 import"./css/setup-step.css"
+import ValentineBackground from '@/components/ValentineBackground';
 
 export function WaitingStep() {
   const { session, partnerAnswers, userRole, language } = useQuiz();
@@ -32,7 +33,9 @@ export function WaitingStep() {
   }
 
   return (
-	<div className='container-cart waiting-div'>
+	<div>
+		<ValentineBackground/>
+		<div className='container-cart waiting-div'>
 		<Card className="w-full max-w-md mx-auto animate-fade-in">
       <CardHeader>
         <CardTitle className="text-center font-headline">{t.waitingTitle[language]}</CardTitle>
@@ -54,6 +57,8 @@ export function WaitingStep() {
       </CardContent>
     </Card>
 	</div>
+	</div>
+	
     
   );
 }

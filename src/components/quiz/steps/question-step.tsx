@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/card';
 import { ArrowRight } from 'lucide-react';
 import { translations } from '@/lib/translations';
+import ValentineBackground from '@/components/ValentineBackground';
 
 export function QuestionStep() {
 	const {
@@ -89,7 +90,12 @@ export function QuestionStep() {
 	const partnerProgress = (partnerAnswers.length / totalQuestions) * 100;
 	
 	return (
+		<div>
+
+	
+	<ValentineBackground />
 		<div className='question-div'>
+			 
 		<div className='container-cart question-margin'>
 		<div className="mx-auto w-full max-w-2xl space-y-6 ">
 		<Card className="w-full animate-fade-in-up">
@@ -172,7 +178,7 @@ export function QuestionStep() {
 			)}
 			</CardContent>
 			</Card></div>
-			</div>
+			</div>	</div>
 			
 		);
 	}

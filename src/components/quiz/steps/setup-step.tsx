@@ -11,6 +11,7 @@ import { QuizConnectLogo } from '@/components/icons';
 import { Loader2 } from 'lucide-react';
 import { translations } from '@/lib/translations';
 import "./css/setup-step.css"
+import ValentineBackground from '@/components/ValentineBackground';
 
 export function SetupStep() {
   const [userAName, setUserAName] = useState('');
@@ -37,7 +38,9 @@ export function SetupStep() {
   };
 
   return (
-	<div className='container-cart'>
+  <div>
+	<ValentineBackground />
+<div className='container-cart'>
 		 <Card className="w-full max-w-md">
       <CardHeader className="text-center cart-header">
         <div className="flex justify-center gap-4 mb-4">
@@ -84,6 +87,8 @@ export function SetupStep() {
       </form>
     </Card>
 	</div>
+  </div>
+	
    
   );
 }
