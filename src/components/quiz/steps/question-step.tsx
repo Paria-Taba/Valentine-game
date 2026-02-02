@@ -153,8 +153,8 @@ export function QuestionStep() {
 			<CardContent className="space-y-3 p-4">
 			<div>
 			<div className="mb-1 flex justify-between">
-			<label className="text-sm font-medium">{t.yourProgress[language]}</label>
-			<span className="text-sm text-muted-foreground">
+			<label className="text-sm font-medium label">{t.yourProgress[language]}</label>
+			<span className="text-sm text-muted-foreground label">
 			{userAnswers.length}/{totalQuestions}
 			</span>
 			</div>
@@ -162,10 +162,10 @@ export function QuestionStep() {
 			</div>
 			<div>
 			<div className="mb-1 flex justify-between">
-			<label className="text-sm font-medium">
+			<label className="text-sm font-medium label">
 			{t.partnerProgress[language].replace('{partnerName}', partnerName)}
 			</label>
-			<span className="text-sm text-muted-foreground">
+			<span className="text-sm text-muted-foreground label">
 			{partnerAnswers.length}/{totalQuestions}
 			</span>
 			</div>
