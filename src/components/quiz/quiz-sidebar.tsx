@@ -58,9 +58,10 @@ export function QuizSidebar() {
   return (
     <aside className="aside">
       <div>
-        <div className="flex items-center  mb-6 ">
-          <QuizConnectLogo className="h-8 w-8 text-primary" />
+        <div className="flex items-left  mb-6 icon-row ">
+         
           <h1 className="text-xl font-bold font-headline">QuizConnect</h1>
+		   <QuizConnectLogo className="h-8 w-8 text-primary" />
         </div>
         <div className="space-y-2">
           <Button

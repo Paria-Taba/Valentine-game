@@ -108,7 +108,7 @@ aside h1{
 }
 .aside>*{
 margin-top: 20px;
-padding: 10px;
+padding: 5px;
 }
 .aside button{
 	background-color: white;
@@ -127,12 +127,18 @@ padding: 10px;
 	
 
 }
-.aside h1{
-	margin-bottom: 10px;
+.icon-row{
+	display: flex;
+	flex-direction: row;
 }
+
 .aside svg{
-	margin-right: 10px;
-	width: 15px;
+	padding-right: 5px;
+	width: 25px;
+}
+.aside h1{
+	padding-bottom: 30px;
+	margin-top: 10px;
 }
 .seperate{
 	margin-top: 200px;
@@ -162,9 +168,7 @@ padding: 10px;
 
 width: 90%;
 }
-.aside{
-	display: none;
-}
+
 }
 @media screen and (max-width:500px) {
 	.input input{
@@ -188,5 +192,35 @@ width: 80%;
 @media screen and (max-width:970px) {
 .aside{
 	width: 30%;
+}
+}
+@media screen and (max-width:600px) {
+.aside{
+	flex-direction: row;
+	width: 100%;
+	margin-top: 10px;
+padding: 5px;
+}
+.seperate{
+	margin-top: 40px;
+	border-top: none;
+}
+.aside h1{
+	margin-bottom: 5px;	
+}
+.question-margin{
+	display: flex;
+	flex-direction: column;
+}
+.layout-column{
+	display: flex;
+	flex-direction: column-reverse;
+}
+.aside h1{
+	padding-bottom: 10px;
+	
+}
+.aside>*{
+	margin-top: 0px;
 }
 }

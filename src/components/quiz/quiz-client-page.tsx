@@ -136,16 +136,19 @@ export function QuizClientPage({
   };
 
   return (
-	
-		<div className="flex min-h-screen bg-secondary">
+
+			<div className="flex min-h-screen bg-secondary layout-column">
       {shouldShowSidebar && <QuizSidebar />}
 
       <main className="flex-1 p-4 sm:p-6 md:p-8">
         <div className="mx-auto w-full max-w-4xl">
           {renderContent()}
         </div>
+		
       </main>
     </div>
+	
+	
 	
     
   );
