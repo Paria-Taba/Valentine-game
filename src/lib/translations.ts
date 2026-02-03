@@ -243,5 +243,10 @@ export const translations = {
   invalidUserId: {
     de: 'Ungültige Benutzer-ID.',
     en: 'Invalid user ID.',
+  },
+  linkCopiedInline: {
+    de: 'Link wurde kopiert',
+    en: 'Link copied',
   }
-};
+}
+  
