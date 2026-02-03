@@ -1,0 +1,74 @@
+.intro-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  padding-top: 50px;
+}
+
+/* BACKGROUND IMAGE */
+.intro-bg {
+  object-fit: cover;      
+  object-position: center;
+  z-index: -1;
+}
+
+/* OVERLAY */
+.intro-overlay {
+  position: relative;
+margin-top: 200px;
+padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; 
+  align-items: center;
+  padding-bottom: 60px;
+  text-align: center;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.05),
+    rgba(0, 0, 0, 0.35)
+  );
+}
+
+/* LANGUAGE BUTTONS */
+.language-switch {
+  display: flex;
+  gap: 12px;
+  padding: 20px;
+}
+.intro-wrapper button{
+	width: 100px;
+	transition: all 0.5s ease;
+	padding: 10px;
+	margin: 10px;
+	border-radius: 10px;
+	cursor: pointer;
+	background-color: #fafaff;
+}
+.intro-wrapper button:hover{
+	background-color: #998cd9;
+	border: 2px solid  #5c3df8;
+}
+/* STORY TEXT */
+.intro-text {
+  font-size: 18px;
+  color: white;
+  max-width: 400px;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+/* MOBILE FIX */
+@media (max-width: 600px) {
+  .intro-text {
+    font-size: 16px;
+    padding: 0 16px;
+  }
+}
+@media (max-width: 400px) {
+.intro-overlay{
+	margin-top: 150px;
+}
+}

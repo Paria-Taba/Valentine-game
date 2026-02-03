@@ -27,6 +27,7 @@ import {
 import type { QuizSession, Answer } from '@/lib/types';
 import { QUIZ_QUESTIONS } from '@/lib/quiz-data';
 
+/* ------------------ helpers ------------------ */
 const shuffleArray = <T,>(array: T[]): T[] => {
   const newArray = [...array];
   for (let i = newArray.length - 1; i > 0; i--) {
@@ -36,6 +37,7 @@ const shuffleArray = <T,>(array: T[]): T[] => {
   return newArray;
 };
 
+/* ------------------ types ------------------ */
 interface QuizContextType {
   session: QuizSession | null;
   isLoadingSession: boolean;
@@ -46,6 +48,7 @@ interface QuizContextType {
   language: 'de' | 'en';
   setLanguage: (language: 'de' | 'en') => void;
   generatedImageUrl: string | null;
+
   createSession: (userAName: string, userBName: string) => Promise<string>;
   joinSession: (sessionId: string, role: 'A' | 'B') => void;
   setRelationship: (relationship: string) => void;
@@ -55,50 +58,50 @@ interface QuizContextType {
 
 const QuizContext = createContext<QuizContextType | undefined>(undefined);
 
+/* ------------------ provider ------------------ */
 export function QuizProvider({ children }: { children: ReactNode }) {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [userRole, setUserRole] = useState<'A' | 'B' | null>(null);
   const [isJoining, setIsJoining] = useState(false);
   const [isReadyForReads, setIsReadyForReads] = useState(false);
-  const [localLanguage, setLocalLanguage] = useState<'de' | 'en'>('de');
+
+  // 🌍 default language = English
+  const [localLanguage, setLocalLanguage] = useState<'de' | 'en'>('en');
+
   const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
 
   const firestore = useFirestore();
   const auth = useAuth();
   const { user: authUser, isUserLoading } = useUser();
 
+  /* -------- join session -------- */
   const joinSession = useCallback((sid: string, role: 'A' | 'B') => {
     setSessionId(sid);
     setUserRole(role);
   }, []);
 
+  /* -------- auth + session prep -------- */
   useEffect(() => {
     const prepareSession = async () => {
       if (!sessionId || !userRole || !auth || !firestore) return;
 
       let user = auth.currentUser;
       if (!user) {
-        try {
-          setIsJoining(true);
-          const userCredential = await signInAnonymously(auth);
-          user = userCredential.user;
-        } catch (error) {
-          console.error("Anonymous sign-in failed:", error);
-          setIsJoining(false);
-          return;
-        }
+        setIsJoining(true);
+        const cred = await signInAnonymously(auth);
+        user = cred.user;
       }
 
       if (userRole === 'B') {
-        setIsJoining(true);
         try {
-          const sessionDocRef = doc(firestore, 'sessions', sessionId);
-          await updateDoc(sessionDocRef, { userBId: user.uid });
-        } catch (error) {
-          console.warn("Attempt to join as User B failed (maybe already joined):", error);
+          await updateDoc(doc(firestore, 'sessions', sessionId), {
+            userBId: user.uid,
+          });
+        } catch {
+          /* ignore if already joined */
         }
       }
-      
+
       setIsReadyForReads(true);
       setIsJoining(false);
     };
@@ -106,38 +109,56 @@ export function QuizProvider({ children }: { children: ReactNode }) {
     prepareSession();
   }, [sessionId, userRole, auth, firestore]);
 
-  const sessionRef = useMemoFirebase(() => (isReadyForReads && sessionId) ? doc(firestore, 'sessions', sessionId) : null, [firestore, sessionId, isReadyForReads]);
-  const answersRef = useMemoFirebase(() => (isReadyForReads && sessionId) ? collection(firestore, 'sessions', sessionId, 'answers') : null, [firestore, sessionId, isReadyForReads]);
+  /* -------- firestore refs -------- */
+  const sessionRef = useMemoFirebase(
+    () => (isReadyForReads && sessionId ? doc(firestore, 'sessions', sessionId) : null),
+    [firestore, sessionId, isReadyForReads]
+  );
 
-  const { data: session, isLoading: isLoadingSession, error: sessionError } = useDoc<QuizSession>(sessionRef);
-  const { data: answers, error: answersError } = useCollection<Answer>(answersRef);
+  const answersRef = useMemoFirebase(
+    () =>
+      isReadyForReads && sessionId
+        ? collection(firestore, 'sessions', sessionId, 'answers')
+        : null,
+    [firestore, sessionId, isReadyForReads]
+  );
 
+  const { data: session, isLoading: isLoadingSession } =
+    useDoc<QuizSession>(sessionRef);
+
+  const { data: answers } = useCollection<Answer>(answersRef);
+
+  /* -------- answers split -------- */
   const [userAnswers, partnerAnswers] = useMemo(() => {
     if (!answers || !userRole || !session) return [[], []];
+
     const myId = userRole === 'A' ? session.userAId : session.userBId;
     const partnerId = userRole === 'A' ? session.userBId : session.userAId;
-    
-    const uAnswers = answers.filter(a => a.userId === myId);
-    const pAnswers = answers.filter(a => a.userId === partnerId);
-    
-    return [uAnswers, pAnswers];
+
+    return [
+      answers.filter(a => a.userId === myId),
+      answers.filter(a => a.userId === partnerId),
+    ];
   }, [answers, userRole, session]);
 
+  /* -------- language -------- */
   const language = session?.language || localLanguage;
 
-  const setLanguage = useCallback((lang: 'de' | 'en') => {
-    setLocalLanguage(lang);
-    if (sessionRef) {
-      updateDoc(sessionRef, { language: lang });
-    }
-  }, [sessionRef]);
+  const setLanguage = useCallback(
+    (lang: 'de' | 'en') => {
+      setLocalLanguage(lang);
+      if (sessionRef) updateDoc(sessionRef, { language: lang });
+    },
+    [sessionRef]
+  );
 
-  const createSession = useCallback(async (userAName: string, userBName: string): Promise<string> => {
-    try {
+  /* -------- create session -------- */
+  const createSession = useCallback(
+    async (userAName: string, userBName: string) => {
       let user = auth.currentUser;
       if (!user) {
-          const userCredential = await signInAnonymously(auth);
-          user = userCredential.user;
+        const cred = await signInAnonymously(auth);
+        user = cred.user;
       }
 
       const newSession: Omit<QuizSession, 'id'> = {
@@ -151,49 +172,50 @@ export function QuizProvider({ children }: { children: ReactNode }) {
         createdAt: Date.now(),
         language: localLanguage,
       };
-      
-      const sessionCollection = collection(firestore, 'sessions');
-      const docRef = await addDoc(sessionCollection, newSession);
-      
-      return docRef.id;
-    } catch (error) {
-      console.error("Error creating session:", error);
-      throw error;
-    }
-  }, [auth, firestore, localLanguage]);
-  
-  const setRelationship = useCallback(async (relationship: string) => {
-    if (!sessionRef) return;
-    
-    const relationshipFilter = relationship === 'Frisch verliebt' ? 'Dating' : relationship;
-    const allRelevantQuestions = QUIZ_QUESTIONS.filter(
-      (q) =>
-        q.relationships.includes(relationshipFilter) ||
+
+      const ref = await addDoc(collection(firestore, 'sessions'), newSession);
+      return ref.id;
+    },
+    [auth, firestore, localLanguage]
+  );
+
+  /* -------- relationship -------- */
+  const setRelationship = useCallback(
+    async (relationship: string) => {
+      if (!sessionRef) return;
+
+      const normalized =
+        relationship === 'Frisch verliebt' ? 'Dating' : relationship;
+
+      const questions = QUIZ_QUESTIONS.filter(q =>
+        q.relationships.includes(normalized) ||
         q.relationships.includes('Anderes')
-    );
-    const shuffled = shuffleArray(allRelevantQuestions);
-    const questionCount = Math.min(10, shuffled.length);
-    const selectedQuestions = shuffled.slice(0, questionCount);
-    const questionIds = selectedQuestions.map(q => q.id);
+      );
 
-    await updateDoc(sessionRef, { relationship, questionIds });
-  }, [sessionRef]);
+      const selected = shuffleArray(questions).slice(0, 10);
+      await updateDoc(sessionRef, {
+        relationship,
+        questionIds: selected.map(q => q.id),
+      });
+    },
+    [sessionRef]
+  );
 
-  const addAnswer = useCallback(async (answer: Omit<Answer, 'userId' | 'sessionId' | 'id'>) => {
-    if (!answersRef || !authUser) return;
-    const finalAnswer: Omit<Answer, 'id'> = {
-      ...answer,
-      userId: authUser.uid,
-      sessionId: answersRef.parent.id,
-    };
-    await addDoc(answersRef, finalAnswer);
-  }, [answersRef, authUser]);
+  /* -------- add answer (FIXED) -------- */
+  const addAnswer = useCallback(
+    async (answer: Omit<Answer, 'userId' | 'sessionId' | 'id'>) => {
+      if (!answersRef || !authUser || !sessionId) return;
 
-  useEffect(() => {
-    if (sessionError) console.error("Session fetch error:", sessionError);
-    if (answersError) console.error("Answers fetch error:", answersError);
-  }, [sessionError, answersError]);
+      await addDoc(answersRef, {
+        ...answer,
+        userId: authUser.uid,
+        sessionId,
+      });
+    },
+    [answersRef, authUser, sessionId]
+  );
 
+  /* -------- provider -------- */
   return (
     <QuizContext.Provider
       value={{
@@ -218,10 +240,9 @@ export function QuizProvider({ children }: { children: ReactNode }) {
   );
 }
 
+/* ------------------ hook ------------------ */
 export function useQuiz(): QuizContextType {
-  const context = useContext(QuizContext);
-  if (context === undefined) {
-    throw new Error('useQuiz must be used within a QuizProvider');
-  }
-  return context;
+  const ctx = useContext(QuizContext);
+  if (!ctx) throw new Error('useQuiz must be used inside QuizProvider');
+  return ctx;
 }
