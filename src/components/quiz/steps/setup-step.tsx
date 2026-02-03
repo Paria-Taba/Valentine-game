@@ -47,7 +47,7 @@ export function SetupStep() {
     <>
       <ValentineBackground />
 
-      <div className="container-cart">
+      <div className="container-cart first-width">
         <Card className="w-full max-w-md">
           <CardHeader className="text-center cart-header">
             <div className="flex justify-center items-center gap-3 mb-4">
@@ -57,9 +57,6 @@ export function SetupStep() {
               </h1>
             </div>
 
-            <CardDescription className="cart-description">
-              {t.welcomeDescription[language]}
-            </CardDescription>
           </CardHeader>
 
           <form onSubmit={handleSubmit}>
