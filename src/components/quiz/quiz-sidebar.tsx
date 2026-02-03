@@ -19,13 +19,13 @@ export function QuizSidebar() {
   const { session, userRole, language } = useQuiz();
   const t = translations;
 
-  const [copied, setCopied] = useState<null | 'partner' | 'mine'>(null);
+  const [copied, setCopied] = useState<null | 'my' | 'partner'>(null);
 
-  if (!session || !userRole) return null;
+  if (!session || !userRole) {
+    return null;
+  }
 
   const partnerRole = userRole === 'A' ? 'B' : 'A';
-  const myName = userRole === 'A' ? session.userAName : session.userBName;
-  const partnerName = userRole === 'A' ? session.userBName : session.userAName;
 
   const baseUrl =
     typeof window !== 'undefined'
@@ -35,20 +35,11 @@ export function QuizSidebar() {
   const myLink = `${baseUrl}/quiz/${session.id}/${userRole}`;
   const partnerLink = `${baseUrl}/quiz/${session.id}/${partnerRole}`;
 
-  const copyToClipboard = (text: string, type: 'partner' | 'mine') => {
+  const copyToClipboard = (text: string, type: 'my' | 'partner') => {
     navigator.clipboard.writeText(text).then(() => {
       setCopied(type);
       setTimeout(() => setCopied(null), 2000);
     });
-  };
-
-  const shareOnWhatsApp = () => {
-    const message = t.whatsAppMessage[language]
-      .replace('{partnerName}', partnerName)
-      .replace('{userName}', myName)
-      .replace('{link}', partnerLink);
-
-    window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   return (
@@ -60,11 +51,16 @@ export function QuizSidebar() {
         </div>
 
         <div className="space-y-2">
-          <Button variant="ghost" className="w-full justify-start" onClick={shareOnWhatsApp}>
+
+          <Button
+            variant="ghost"
+            className="w-full justify-start"
+          >
             <Share2 className="mr-2 h-4 w-4" />
             {t.invitePartner[language]}
           </Button>
 
+          {/* Partner link */}
           <div>
             <Button
               variant="ghost"
@@ -74,28 +70,32 @@ export function QuizSidebar() {
               <Copy className="mr-2 h-4 w-4" />
               {t.copyPartnerLink[language]}
             </Button>
+
             {copied === 'partner' && (
-              <p className="text-xs text-green-600 ml-8 mt-1 copy-link">
-                {t.linkCopiedInline[language]}
+              <p className="copy-text">
+                {t.linkCopiedPartner[language]}
               </p>
             )}
           </div>
 
+          {/* My link */}
           <div>
             <Button
               variant="ghost"
               className="w-full justify-start"
-              onClick={() => copyToClipboard(myLink, 'mine')}
+              onClick={() => copyToClipboard(myLink, 'my')}
             >
               <Copy className="mr-2 h-4 w-4" />
               {t.copyMyLink[language]}
             </Button>
-            {copied === 'mine' && (
-              <p className="text-xs text-green-600 ml-8 mt-1 copy-link">
-                {t.linkCopiedInline[language]}
+
+            {copied === 'my' && (
+              <p className="copy-text">
+                {t.linkCopiedMy[language]}
               </p>
             )}
           </div>
+
         </div>
       </div>
 

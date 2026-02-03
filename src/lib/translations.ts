@@ -247,6 +247,14 @@ export const translations = {
   linkCopiedInline: {
     de: 'Link wurde kopiert',
     en: 'Link copied',
-  }
+  },
+  linkCopiedMy: {
+  de: 'Mein Link wurde kopiert',
+  en: 'My link copied',
+},
+linkCopiedPartner: {
+  de: 'Partner-Link wurde kopiert',
+  en: 'Partner link copied',
+},
 }
   
