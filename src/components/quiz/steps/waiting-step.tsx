@@ -6,6 +6,8 @@ import { Progress } from '@/components/ui/progress';
 import { Hourglass } from 'lucide-react';
 import { translations } from '@/lib/translations';
 import"./css/setup-step.css"
+import logo from "../../../../public/logo.png"
+import Image from 'next/image';
 import ValentineBackground from '@/components/ValentineBackground';
 
 export function WaitingStep() {
@@ -35,7 +37,16 @@ export function WaitingStep() {
   return (
 	<div className='result-margin'>
 		<ValentineBackground/>
-		<div className='container-cart waiting-div'>
+		
+		<div className='container-cart waiting-div'> <div className="logo-wrapper">
+  <Image
+    src={logo}
+    alt="Logo"
+    width={60}
+    height={60}
+    priority
+  />
+</div>
 		<Card className="w-full max-w-md mx-auto animate-fade-in">
       <CardHeader>
         <CardTitle className="text-center font-headline">{t.waitingTitle[language]}</CardTitle>

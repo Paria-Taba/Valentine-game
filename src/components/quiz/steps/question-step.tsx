@@ -17,7 +17,8 @@ import {
 import { ArrowRight } from 'lucide-react';
 import { translations } from '@/lib/translations';
 import ValentineBackground from '@/components/ValentineBackground';
-import { QuizSidebar } from '../quiz-sidebar';
+import logo from "../../../../public/logo.png"
+import Image from 'next/image';
 
 export function QuestionStep() {
 	const {
@@ -97,12 +98,21 @@ export function QuestionStep() {
 	<ValentineBackground />
 	 
 		<div className='question-div'>
-			 
+			
 		<div className='container-cart question-margin'>
 		<div className="mx-auto w-full max-w-2xl space-y-6 ">
 		<Card className="w-full animate-fade-in-up">
 		<CardHeader>
-		<div className="mb-2 flex items-center justify-between">
+		<div className="mb-2 flex items-center justify-between"> 
+			 <div className="logo-wrapper">
+  <Image
+    src={logo}
+    alt="Logo"
+    width={60}
+    height={60}
+    priority
+  />
+</div>
 		<span className="text-sm font-medium text-primary span-cart">
 		{questionInfo.topic}
 		</span>

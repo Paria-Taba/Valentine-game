@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Terminal } from 'lucide-react';
 import { translations } from '@/lib/translations';
+import logo from "../../../../public/logo.png"
+import Image from 'next/image';
 import "./css/setup-step.css"
 import ValentineBackground from '@/components/ValentineBackground';
 
@@ -49,7 +51,16 @@ export function GeneratingStep() {
 
   return (<div >
 	<ValentineBackground />
-	<div className='container-cart generating-div'>
+	<div className='container-cart generating-div'> <div className="logo-wrapper">
+  <Image
+    src={logo}
+    alt="Logo"
+    width={60}
+    height={60}
+    priority
+  />
+</div>
+		
 		 <Card className="w-full max-w-md mx-auto animate-fade-in">
         <CardHeader>
             <CardTitle className="text-center">{t.generatingTitle[language]}</CardTitle>

@@ -14,6 +14,7 @@ import { QUIZ_QUESTIONS, MCQuestion } from '@/lib/quiz-data';
 import type { Answer } from '@/lib/types';
 import "./css/setup-step.css"
 import ValentineBackground from '@/components/ValentineBackground';
+import logo from "../../../../public/logo.png"
 
 export function ResultsStep() {
   const { session, language, userAnswers, partnerAnswers, userRole, generatedImageUrl } = useQuiz();
@@ -73,7 +74,17 @@ export function ResultsStep() {
   return (
 	<div>
 		<ValentineBackground />
+		
 		<div className='container-cart result-div'>
+		 <div className="logo-wrapper">
+  <Image
+    src={logo}
+    alt="Logo"
+    width={60}
+    height={60}
+    priority
+  />
+</div>
 		<div className="w-full max-w-2xl mx-auto space-y-6">
       <Card className="overflow-hidden animate-fade-in ">
         <CardHeader className="text-center margin">
@@ -83,9 +94,9 @@ export function ResultsStep() {
               .replace('{score}', String(myScore))
               .replace('{total}', String(totalGuesses))}
           </CardDescription>
-          <CardDescription>
+          {/* <CardDescription>
             {t.resultsDescription[language]}
-          </CardDescription>
+          </CardDescription> */}
         </CardHeader>
         <CardContent>
           <div className="aspect-square relative w-full rounded-lg overflow-hidden shadow-lg">

@@ -6,6 +6,8 @@ import { useQuiz } from '@/context/quiz-context';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import logo from "../../../../public/logo.png"
+import Image from 'next/image';
 import {
   Card,
   CardContent,
@@ -48,6 +50,16 @@ export function SetupStep() {
       <ValentineBackground />
 
       <div className="container-cart first-width">
+		 <div className="logo-wrapper">
+  <Image
+    src={logo}
+    alt="Logo"
+    width={60}
+    height={60}
+    priority
+  />
+</div>
+
         <Card className="w-full max-w-md">
           <CardHeader className="text-center cart-header">
             <div className="flex justify-center items-center gap-3 mb-4">

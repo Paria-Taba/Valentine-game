@@ -7,6 +7,7 @@ import { useQuiz } from '@/context/quiz-context';
 import { SetupStep } from '@/components/quiz/steps/setup-step';
 import clock from '../../../../public/clock.png';
 import './css/intro.css';
+import logo from "../../../../public/logo.png"
 
 
 export default function IntroPage() {
@@ -26,6 +27,14 @@ export default function IntroPage() {
         priority
         className="intro-bg"
       />
+	 <Image
+  src={logo}
+  alt="Logo"
+  width={60}
+  height={60}
+  priority
+  className="logo"
+/>
 
       {/* OVERLAY CONTENT */}
       <div className="intro-overlay">

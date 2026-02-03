@@ -1,9 +1,9 @@
 .intro-wrapper {
   position: relative;
   width: 100vw;
-  height: 100vh;
+
   overflow: hidden;
-  padding-top: 50px;
+  
 }
 
 /* BACKGROUND IMAGE */
