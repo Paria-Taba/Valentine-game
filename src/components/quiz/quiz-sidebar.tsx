@@ -44,6 +44,7 @@ export function QuizSidebar() {
 
   return (
     <aside className="aside">
+		
       <div>
         <div className="flex items-left mb-6 icon-row">
           <h1 className="text-xl font-bold font-headline">QuizConnect</h1>

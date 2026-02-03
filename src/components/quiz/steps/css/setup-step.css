@@ -107,6 +107,8 @@ width: 20%;
 	display: flex;
 	flex-direction: column;
 	font-size: 14px;
+	padding: 10px;
+	border-radius: 10px;
 }
 aside h1{
 	font-size: 20px;
@@ -169,36 +171,14 @@ padding: 5px;
 }
 
 
-@media screen and (max-width:500px) {
-	.input input{
 
-width: 80%;
-
-}
-.relation-margin{
-	width: 90%;
-
-}
-.input-flex{
-
-	grid-template-columns: 1fr;
-	grid-template-rows: 80px 80px 80px 80px;
-
-}
-
-
-}
-@media screen and (max-width:970px) {
+@media screen and (max-width:800px) {
 .aside{
-	width: 30%;
-}
-}
-@media screen and (max-width:600px) {
-.aside{
+	width: 100%;
 	flex-direction: row;
-width: 90%;
 	margin-top: 10px;
 padding: 5px;
+gap: 200px;
 }
 
 
@@ -302,5 +282,29 @@ width: 90%;
 	min-width: 200px;
 
 }
+
+}
+
+
+@media screen and (max-width:500px) {
+	.input input{
+
+width: 80%;
+
+}
+.relation-margin{
+	width: 90%;
+
+}
+.input-flex{
+
+	grid-template-columns: 1fr;
+	grid-template-rows: 80px 80px 80px 80px;
+
+}
+.aside{
+gap: 50px;
+}
+
 
 }

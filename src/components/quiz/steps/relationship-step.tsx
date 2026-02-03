@@ -11,6 +11,7 @@ import { translations } from '@/lib/translations';
 import "./css/setup-step.css"
 import "./../../ValentineBackground"
 import ValentineBackground from './../../ValentineBackground';
+import { QuizSidebar } from '../quiz-sidebar';
 
 const relationshipOptions = [
   'Liebespaar',
@@ -35,8 +36,9 @@ export function RelationshipStep() {
   };
 
   return (
-	<div className='relation-center'>
+	<div className='relation-center layout-column'>
 		 <ValentineBackground />
+		<QuizSidebar />
 	<div className='container-cart relation-margin'>
 		<Card className="w-full max-w-md mx-auto animate-fade-in">
       <CardHeader>

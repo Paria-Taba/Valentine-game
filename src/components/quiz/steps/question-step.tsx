@@ -17,6 +17,7 @@ import {
 import { ArrowRight } from 'lucide-react';
 import { translations } from '@/lib/translations';
 import ValentineBackground from '@/components/ValentineBackground';
+import { QuizSidebar } from '../quiz-sidebar';
 
 export function QuestionStep() {
 	const {
@@ -94,6 +95,7 @@ export function QuestionStep() {
 
 	
 	<ValentineBackground />
+	 
 		<div className='question-div'>
 			 
 		<div className='container-cart question-margin'>
