@@ -47,7 +47,7 @@ export function GeneratingStep() {
     generate();
   }, [session, userAnswers, partnerAnswers, userRole, setGeneratedImage, generatedImageUrl, language, t.generationError]);
 
-  return (<div>
+  return (<div >
 	<ValentineBackground />
 	<div className='container-cart generating-div'>
 		 <Card className="w-full max-w-md mx-auto animate-fade-in">

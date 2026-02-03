@@ -75,8 +75,8 @@ export function ResultsStep() {
 		<ValentineBackground />
 		<div className='container-cart result-div'>
 		<div className="w-full max-w-2xl mx-auto space-y-6">
-      <Card className="overflow-hidden animate-fade-in">
-        <CardHeader className="text-center">
+      <Card className="overflow-hidden animate-fade-in ">
+        <CardHeader className="text-center margin">
           <CardTitle className="font-headline text-3xl">{t.resultsTitle[language]}</CardTitle>
           <CardDescription>
             {t.resultsScore[language]

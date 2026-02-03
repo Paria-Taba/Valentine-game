@@ -126,7 +126,7 @@ export function AnalysisStep() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 analys">
       <h2 className="text-2xl font-bold font-headline text-center">{t.analysisHeadline[language]}</h2>
       <p className="text-center text-muted-foreground">
         {t.analysisDescription[language]}

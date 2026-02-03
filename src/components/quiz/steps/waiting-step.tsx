@@ -33,7 +33,7 @@ export function WaitingStep() {
   }
 
   return (
-	<div>
+	<div className='result-margin'>
 		<ValentineBackground/>
 		<div className='container-cart waiting-div'>
 		<Card className="w-full max-w-md mx-auto animate-fade-in">
@@ -46,7 +46,7 @@ export function WaitingStep() {
       <CardContent className="flex flex-col items-center justify-center space-y-6 p-10">
         <Hourglass className="h-16 w-16 text-primary animate-pulse" />
         <div className="w-full space-y-2">
-            <p className="text-center text-muted-foreground">
+            <p className="text-center text-muted-foreground text-3">
                 {t.waitingProgress[language]
                     .replace('{partnerName}', partnerName)
                     .replace('{answered}', String(partnerAnswers.length))
