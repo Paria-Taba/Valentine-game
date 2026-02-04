@@ -4,6 +4,9 @@
 *{
 	margin: 0;
 }
+.logo-wrapper img{
+	padding: 10px;
+}
 @layer base {
   :root {
     --background: 240 100% 99%;

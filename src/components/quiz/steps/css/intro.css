@@ -1,8 +1,9 @@
 .intro-wrapper {
   position: relative;
   width: 100vw;
-
+margin: 0 50px 50px 50px;
   overflow: hidden;
+  border-radius: 30px;
   
 }
 
@@ -70,5 +71,8 @@ padding: 30px;
 @media (max-width: 400px) {
 .intro-overlay{
 	margin-top: 150px;
+}
+.intro-wrapper{
+	margin: 0 20px 20px 20px;
 }
 }

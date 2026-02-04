@@ -8,8 +8,6 @@ import { Label } from '@/components/ui/label';
 import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { translations } from '@/lib/translations';
-import logo from "../../../../public/logo.png"
-import Image from 'next/image';
 import "./css/setup-step.css"
 import "./../../ValentineBackground"
 import ValentineBackground from './../../ValentineBackground';
@@ -43,15 +41,7 @@ export function RelationshipStep() {
 		 <ValentineBackground />
 		<QuizSidebar />
 	<div className='container-cart relation-margin'>
-				 <div className="logo-wrapper">
-  <Image
-    src={logo}
-    alt="Logo"
-    width={60}
-    height={60}
-    priority
-  />
-</div>
+				 
 		<Card className="w-full max-w-md mx-auto animate-fade-in">
       <CardHeader>
         <CardTitle className="text-center font-headline text-2xl cart-title">

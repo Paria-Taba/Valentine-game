@@ -27,14 +27,7 @@ export default function IntroPage() {
         priority
         className="intro-bg"
       />
-	 <Image
-  src={logo}
-  alt="Logo"
-  width={60}
-  height={60}
-  priority
-  className="logo"
-/>
+
 
       {/* OVERLAY CONTENT */}
       <div className="intro-overlay">

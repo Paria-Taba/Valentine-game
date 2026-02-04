@@ -4,6 +4,9 @@ import { Toaster } from '@/components/ui/toaster';
 import { Analytics } from '@/components/genkit/analytics';
 import { QuizProvider } from '@/context/quiz-context';
 import { FirebaseClientProvider } from '@/firebase';
+import logo from "../../public/logo.png"
+import Image from 'next/image';
+
 
 export const metadata: Metadata = {
   title: 'QuizConnect',
@@ -26,7 +29,16 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-body antialiased min-h-screen bg-[#f2f2fc] m-0 p-0">
+      <body  suppressHydrationWarning className="font-body antialiased min-h-screen bg-[#f2f2fc] m-0 p-0">
+		 <div className="logo-wrapper">
+		  <Image
+			src={logo}
+			alt="Logo"
+			width={60}
+			height={60}
+			priority
+		  />
+		</div>
         <FirebaseClientProvider>
           <QuizProvider>
             {children}
