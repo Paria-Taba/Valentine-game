@@ -17,6 +17,7 @@ import {
 import { ArrowRight } from 'lucide-react';
 import { translations } from '@/lib/translations';
 import ValentineBackground from '@/components/ValentineBackground';
+import { QuizSidebar } from '../quiz-sidebar';
 
 export function QuestionStep() {
 	const {
@@ -90,14 +91,15 @@ export function QuestionStep() {
 	const partnerProgress = (partnerAnswers.length / totalQuestions) * 100;
 	
 	return (
-		<div>
+		<div className='question-row'>
 
-	
 	<ValentineBackground />
-	 
-		<div className='question-div'>
+	 <QuizSidebar />
+
+		<div className='question-div'>	
 			
 		<div className='container-cart question-margin'>
+			
 		<div className="mx-auto w-full max-w-2xl space-y-6 ">
 		<Card className="w-full animate-fade-in-up">
 		<CardHeader>
