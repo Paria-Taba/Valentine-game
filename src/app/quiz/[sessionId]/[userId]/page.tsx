@@ -19,8 +19,7 @@ export default async function QuizPage({ params, searchParams }: QuizPageParams)
   return (
     <QuizClientPage
       sessionId={sessionId}
-      userId={userId}
-      searchParams={searchParams}
+  userId={userId}
     />
   );
 }
