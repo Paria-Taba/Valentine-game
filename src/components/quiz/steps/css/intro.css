@@ -4,7 +4,19 @@
 margin: 0 50px 50px 50px;
   overflow: hidden;
   border-radius: 30px;
-  
+}
+.tap-hint{
+	 margin-top: 5px;
+  display: flex;
+  animation: fadePulse 2s ease-in-out infinite;
+}
+.tap-icon{
+	margin-right: 5px;
+}
+.tap-text{
+	color: white;
+	font-style: italic;
+	padding-bottom: 10px;
 }
 
 /* BACKGROUND IMAGE */
@@ -38,6 +50,10 @@ padding: 30px;
   display: flex;
   gap: 12px;
   padding: 20px;
+    
+}
+.intro-overlay button{
+	border: none;
 }
 .intro-wrapper button{
 	width: 100px;
