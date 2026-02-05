@@ -47,13 +47,19 @@ interface QuizContextType {
   partnerAnswers: Answer[];
   language: 'de' | 'en';
   setLanguage: (language: 'de' | 'en') => void;
+  generatedStory: string | null;
+  sessionId: string | null;
+
   generatedImageUrl: string | null;
+  
 
   createSession: (userAName: string, userBName: string) => Promise<string>;
   joinSession: (sessionId: string, role: 'A' | 'B') => void;
   setRelationship: (relationship: string) => void;
   addAnswer: (answer: Omit<Answer, 'userId' | 'sessionId' | 'id'>) => void;
+
   setGeneratedImage: (imageUrl: string) => void;
+  setGeneratedStory: (story: string) => void;
 }
 
 const QuizContext = createContext<QuizContextType | undefined>(undefined);
@@ -69,6 +75,7 @@ export function QuizProvider({ children }: { children: ReactNode }) {
   const [localLanguage, setLocalLanguage] = useState<'de' | 'en'>('en');
 
   const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
+  const [generatedStory, setGeneratedStory] = useState<string | null>(null);
 
   const firestore = useFirestore();
   const auth = useAuth();
@@ -201,7 +208,7 @@ export function QuizProvider({ children }: { children: ReactNode }) {
     [sessionRef]
   );
 
-  /* -------- add answer (FIXED) -------- */
+  /* -------- add answer -------- */
   const addAnswer = useCallback(
     async (answer: Omit<Answer, 'userId' | 'sessionId' | 'id'>) => {
       if (!answersRef || !authUser || !sessionId) return;
@@ -226,13 +233,16 @@ export function QuizProvider({ children }: { children: ReactNode }) {
         userAnswers,
         partnerAnswers,
         language,
+		  sessionId,
         setLanguage,
         generatedImageUrl,
+        generatedStory,
         createSession,
         joinSession,
         setRelationship,
         addAnswer,
         setGeneratedImage: setGeneratedImageUrl,
+        setGeneratedStory,
       }}
     >
       {children}

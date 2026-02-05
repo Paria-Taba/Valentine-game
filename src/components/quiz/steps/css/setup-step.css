@@ -361,3 +361,15 @@ gap: 50px;
 	align-items: center;
 
 }
+.story-margin{
+	margin: 30px;
+}
+.image-width{
+	width: 50%;
+
+}
+.image-center{
+		display: flex;
+	justify-content: center;
+	align-items: center;
+}

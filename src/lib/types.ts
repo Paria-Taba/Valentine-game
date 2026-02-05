@@ -9,15 +9,18 @@ export type Answer = {
   answer: string;
 };
 
-export type QuizSession = {
-  id: string; // Firestore document ID
-  userAId: string;
+export interface QuizSession {
+  id?: string;
   userAName: string;
-  userBId: string | null;
   userBName: string;
+  userAId: string;
+  userBId: string | null;
   relationship: string;
   questionIds: number[];
   generatedImageUrl: string | null;
+
+  generatedStory?: string | null;
+
   createdAt: number;
   language: 'de' | 'en';
-};
+}
