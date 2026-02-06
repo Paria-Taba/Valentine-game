@@ -17,10 +17,23 @@ export interface QuizSession {
   userBId: string | null;
   relationship: string;
   questionIds: number[];
+   matchCount?: number;
+  matchDetails?: MatchDetail[];
   generatedImageUrl: string | null;
 
   generatedStory?: string | null;
 
   createdAt: number;
   language: 'de' | 'en';
+}
+export interface MatchDetail {
+  questionKey: string;
+
+  aSelf: string;
+  bGuessAboutA: string;
+  bGuessedCorrectly: boolean;
+
+  bSelf: string;
+  aGuessAboutB: string;
+  aGuessedCorrectly: boolean;
 }

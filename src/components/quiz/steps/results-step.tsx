@@ -1,7 +1,6 @@
 'use client';
 
-import Image from 'next/image';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useQuiz } from '@/context/quiz-context';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,7 +13,6 @@ import {
 } from '@/components/ui/card';
 import { Copy, Eye, Share2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { AnalysisStep } from './analysis-step';
 import {
   Dialog,
   DialogContent,
@@ -23,66 +21,39 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { translations } from '@/lib/translations';
-import { QUIZ_QUESTIONS, MCQuestion } from '@/lib/quiz-data';
-import type { Answer } from '@/lib/types';
 import ValentineBackground from '@/components/ValentineBackground';
-import './css/setup-step.css';
+import { apiGet } from '@/lib/couplesQuizApi';
+import { AnalysisStep } from './analysis-step';
 
 export function ResultsStep() {
-  const {
-    session,
-    language,
-    userAnswers,
-    partnerAnswers,
-    userRole,
-  } = useQuiz();
-
+  const { session, sessionId, language } = useQuiz();
   const { toast } = useToast();
   const t = translations;
 
-  const relevantQuestions = useMemo(() => {
-    if (!session?.questionIds) return [];
-    return session.questionIds
-      .map(id => QUIZ_QUESTIONS.find(q => q.id === id))
-      .filter((q): q is MCQuestion => !!q);
-  }, [session?.questionIds]);
+  const [imageData, setImageData] = useState<string | null>(null);
 
-  const getAnswer = (
-    answers: Answer[],
-    questionId: number,
-    type: 'self' | 'guess'
-  ) => {
-    return answers.find(
-      a => a.questionId === questionId && a.questionType === type
-    )?.answer;
-  };
+  useEffect(() => {
+    if (!sessionId) return;
 
-  const myScore = useMemo(() => {
-    if (!session || !userAnswers || !partnerAnswers || !userRole) return 0;
+    const loadImage = async () => {
+      try {
+        const res = await apiGet({
+          action: 'getImage',
+          sessionId,
+        });
 
-    let score = 0;
-    relevantQuestions.forEach(q => {
-      const partnerSelfAnswer = getAnswer(partnerAnswers, q.id, 'self');
-      const myGuessOnPartner = getAnswer(userAnswers, q.id, 'guess');
-
-      if (
-        partnerSelfAnswer &&
-        myGuessOnPartner &&
-        partnerSelfAnswer === myGuessOnPartner
-      ) {
-        score++;
+        if (res.success) {
+          setImageData(res.imageData);
+        }
+      } catch (e) {
+        console.error('Image load failed', e);
       }
-    });
+    };
 
-    return score;
-  }, [session, userAnswers, partnerAnswers, userRole, relevantQuestions]);
+    loadImage();
+  }, [sessionId]);
 
-  const totalGuesses = relevantQuestions.length;
-
-  const imageUrl = session?.generatedImageUrl;
-  const story = session?.generatedStory;
-
-  if (!session || !imageUrl) return null;
+  if (!session) return null;
 
   const resultLink =
     typeof window !== 'undefined' ? window.location.href : '';
@@ -115,31 +86,27 @@ export function ResultsStep() {
               </CardTitle>
               <CardDescription>
                 {t.resultsScore[language]
-                  .replace('{score}', String(myScore))
-                  .replace('{total}', String(totalGuesses))}
+                  .replace('{score}', String(session.matchCount ?? 0))
+                  .replace('{total}', '20')}
               </CardDescription>
             </CardHeader>
 
             <CardContent>
-              {story && (
+              {session.generatedStory && (
                 <p className="text-center text-muted-foreground story-margin">
-                  {story}
+                  {session.generatedStory}
                 </p>
               )}
-<div className='image-center'>
-              <div className="aspect-square relative w-full rounded-lg overflow-hidden shadow-lg image-width">
-                <Image
-                  src={imageUrl}
-                  alt={
-                    language === 'de'
-                      ? 'Generiertes Bild eurer Verbindung'
-                      : 'Generated image of your connection'
-                  }
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div></div>
+
+              {imageData && (
+                <div className="mt-6">
+                  <img
+                    src={imageData}
+                    alt="Result"
+                    className="w-full rounded-lg shadow-lg"
+                  />
+                </div>
+              )}
             </CardContent>
 
             <CardFooter className="flex-col sm:flex-row gap-2">
@@ -171,6 +138,7 @@ export function ResultsStep() {
                       {t.analysisTitle[language]}
                     </DialogTitle>
                   </DialogHeader>
+
                   <div className="overflow-y-auto pr-4 -mr-4">
                     <AnalysisStep />
                   </div>

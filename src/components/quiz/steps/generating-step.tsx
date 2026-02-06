@@ -1,31 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useQuiz } from '@/context/quiz-context';
-import { generateSharedImage } from '@/ai/flows/generate-shared-image';
-import { generateStory } from '@/ai/flows/generate-story';
 import { updateDoc, doc } from 'firebase/firestore';
 import { useFirestore } from '@/firebase';
 import { Loader2 } from 'lucide-react';
 import { translations } from '@/lib/translations';
 import ValentineBackground from '@/components/ValentineBackground';
+import { apiPost } from '@/lib/couplesQuizApi';
 
 export function GeneratingStep() {
-  const {
-    session,
-    sessionId,
-    userAnswers,
-    partnerAnswers,
-    userRole,
-    language,
-  } = useQuiz();
-
+  const { session, sessionId, userRole, language } = useQuiz();
   const firestore = useFirestore();
   const [error, setError] = useState<string | null>(null);
+  const hasGenerated = useRef(false);
   const t = translations;
 
   useEffect(() => {
     if (
+      hasGenerated.current ||
       userRole !== 'A' ||
       !session ||
       !sessionId ||
@@ -35,42 +28,35 @@ export function GeneratingStep() {
       return;
     }
 
-    const generate = async () => {
+    hasGenerated.current = true;
+
+    const generateResult = async () => {
       try {
-        const userAAnswers = userAnswers.map(a => a.answer);
-        const userBAnswers = partnerAnswers.map(a => a.answer);
+        const result = await apiPost('generateResult', { sessionId });
 
-        // 1️⃣ STORY
-        const storyResult = await generateStory({
-          userAName: session.userAName,
-          userBName: session.userBName,
-          userAAnswers,
-          userBAnswers,
-          language,
-        });
+        if (!result.success) {
+          throw new Error(result.error || 'Generation failed');
+        }
 
-        // 2️IMAGE
-        const imageResult = await generateSharedImage({
-          userAName: session.userAName,
-          userBName: session.userBName,
-          userAAnswers,
-          userBAnswers,
-        });
-
-        // SAVE TO FIRESTORE
         await updateDoc(doc(firestore, 'sessions', sessionId), {
-          generatedStory: storyResult.story,
-          generatedImageUrl: imageResult.imageUrl,
+          generatedStory: result.story,
+          generatedImageUrl: result.imageUrl,
+          matchCount: result.matchCount,
+          matchDetails: result.matchDetails,
         });
 
       } catch (e) {
-        console.error(e);
-        setError(t.generationError[language]);
+        console.error('Generate result failed:', e);
+        setError(
+          e instanceof Error
+            ? e.message
+            : t.generationError[language]
+        );
       }
     };
 
-    generate();
-  }, [session, sessionId, userRole, language]);
+    generateResult();
+  }, [session, sessionId, userRole, language, firestore]);
 
   return (
     <>
