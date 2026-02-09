@@ -21,9 +21,7 @@ export function GeneratingStep() {
       hasGenerated.current ||
       userRole !== 'A' ||
       !session ||
-      !sessionId ||
-      session.generatedImageUrl ||
-      session.generatedStory
+      !sessionId
     ) {
       return;
     }
@@ -34,15 +32,15 @@ export function GeneratingStep() {
       try {
         const result = await apiPost('generateResult', { sessionId });
 
-        if (!result.success) {
-          throw new Error(result.error || 'Generation failed');
+        if (!result?.success) {
+          throw new Error(result?.error || 'Generation failed');
         }
 
         await updateDoc(doc(firestore, 'sessions', sessionId), {
           generatedStory: result.story,
           generatedImageUrl: result.imageUrl,
-          matchCount: result.matchCount,
-          matchDetails: result.matchDetails,
+          matchCount: result.matchCount ?? 0,
+          matchDetails: result.matchDetails ?? [],
         });
 
       } catch (e) {
@@ -56,7 +54,7 @@ export function GeneratingStep() {
     };
 
     generateResult();
-  }, [session, sessionId, userRole, language, firestore]);
+  }, [session, sessionId, userRole, language, firestore, t]);
 
   return (
     <>
@@ -66,7 +64,11 @@ export function GeneratingStep() {
         <p className="mt-4 text-muted-foreground">
           {t.generatingDescription[language]}
         </p>
-        {error && <p className="text-red-500 mt-2">{error}</p>}
+        {error && (
+          <p className="text-red-500 mt-2">
+            {error}
+          </p>
+        )}
       </div>
     </>
   );

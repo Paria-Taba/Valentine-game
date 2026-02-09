@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useQuiz } from '@/context/quiz-context';
 import { Button } from '@/components/ui/button';
 import {
@@ -22,36 +22,12 @@ import {
 } from '@/components/ui/dialog';
 import { translations } from '@/lib/translations';
 import ValentineBackground from '@/components/ValentineBackground';
-import { apiGet } from '@/lib/couplesQuizApi';
 import { AnalysisStep } from './analysis-step';
 
 export function ResultsStep() {
-  const { session, sessionId, language } = useQuiz();
+  const { session, language } = useQuiz();
   const { toast } = useToast();
   const t = translations;
-
-  const [imageData, setImageData] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!sessionId) return;
-
-    const loadImage = async () => {
-      try {
-        const res = await apiGet({
-          action: 'getImage',
-          sessionId,
-        });
-
-        if (res.success) {
-          setImageData(res.imageData);
-        }
-      } catch (e) {
-        console.error('Image load failed', e);
-      }
-    };
-
-    loadImage();
-  }, [sessionId]);
 
   if (!session) return null;
 
@@ -73,6 +49,10 @@ export function ResultsStep() {
     window.open(whatsappUrl, '_blank');
   };
 
+  const imageUrl = session.generatedImageUrl;
+  const story = session.generatedStory;
+  const score = session.matchCount ?? 0;
+
   return (
     <div>
       <ValentineBackground />
@@ -86,23 +66,23 @@ export function ResultsStep() {
               </CardTitle>
               <CardDescription>
                 {t.resultsScore[language]
-                  .replace('{score}', String(session.matchCount ?? 0))
+                  .replace('{score}', String(score))
                   .replace('{total}', '20')}
               </CardDescription>
             </CardHeader>
 
             <CardContent>
-              {session.generatedStory && (
+              {story && (
                 <p className="text-center text-muted-foreground story-margin">
-                  {session.generatedStory}
+                  {story}
                 </p>
               )}
 
-              {imageData && (
+              {imageUrl && (
                 <div className="mt-6">
                   <img
-                    src={imageData}
-                    alt="Result"
+                    src={imageUrl}
+                    alt="Generated result"
                     className="w-full rounded-lg shadow-lg"
                   />
                 </div>

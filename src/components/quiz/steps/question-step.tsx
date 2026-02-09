@@ -1,158 +1,184 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useQuiz } from '@/context/quiz-context';
-import { QUIZ_QUESTIONS } from '@/lib/quiz-data';
+import { apiGet } from '@/lib/couplesQuizApi';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import "./css/setup-step.css"
 import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
 } from '@/components/ui/card';
 import { ArrowRight } from 'lucide-react';
 import { translations } from '@/lib/translations';
 import ValentineBackground from '@/components/ValentineBackground';
 import { QuizSidebar } from '../quiz-sidebar';
+import './css/setup-step.css';
 
 export function QuestionStep() {
-	const {
-		session,
-		userAnswers,
-		partnerAnswers,
-		userRole,
-		addAnswer,
-		language,
-	} = useQuiz();
-	const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
-	const t = translations;
-	
-	const relevantQuestions = useMemo(() => {
-		if (!session?.questionIds) return [];
-		return session.questionIds
-		.map(id => QUIZ_QUESTIONS.find(q => q.id === id))
-		.filter(Boolean);
-	}, [session?.questionIds]);
-	
-	if (!session || !userRole) return null;
-	
-	const partnerName = userRole === 'A' ? session.userBName : session.userAName;
-	
-	const totalQuestionsPerPart = relevantQuestions.length;
-	if (totalQuestionsPerPart === 0) {
-		return <div>{t.noQuestionsError[language]}</div>;
-	}
-	
-	const totalQuestions = totalQuestionsPerPart * 2;
-	const currentQuestionIndex = userAnswers.length;
-	
-	if (currentQuestionIndex >= totalQuestions) {
-		return null;
-	}
-	
-	const isSelfQuestionPart = currentQuestionIndex < totalQuestionsPerPart;
-	const questionDataIndex = isSelfQuestionPart
-	? currentQuestionIndex
-	: currentQuestionIndex - totalQuestionsPerPart;
-	const questionInfo = relevantQuestions[questionDataIndex];
-	
-	if (!questionInfo) {
-		// This can happen briefly while questions are being selected
-		return <div>Loading question...</div>;
-	}
-	
-	const questionText = isSelfQuestionPart
-	? questionInfo.selfQuestion[language]
-	: questionInfo.guessQuestion[language].replace('{partnerName}', partnerName);
-	
-	const questionTitle = isSelfQuestionPart
-	? t.selfQuestionTitle[language]
-	: t.partnerQuestionTitle[language].replace('{partnerName}', partnerName);
-	
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
-		if (selectedAnswers.length > 0) {
-			addAnswer({
-				questionId: questionInfo.id,
-				topic: questionInfo.topic,
-				question: isSelfQuestionPart ? questionInfo.selfQuestion[language] : questionInfo.guessQuestion[language],
-				questionType: isSelfQuestionPart ? 'self' : 'guess',
-				answer: selectedAnswers.join(', '),
-			});
-			setSelectedAnswers([]);
-		}
-	};
-	
-	const userProgress = (userAnswers.length / totalQuestions) * 100;
-	const partnerProgress = (partnerAnswers.length / totalQuestions) * 100;
-	
-	return (
-		<div className='question-row'>
+  const {
+    session,
+    userAnswers,
+    partnerAnswers,
+    userRole,
+    addAnswer,
+    language,
+  } = useQuiz();
 
-	<ValentineBackground />
-	 <QuizSidebar />
+  const t = translations;
 
-		<div className='question-div'>	
-			
-		<div className='container-cart question-margin'>
-			
-		<div className="mx-auto w-full max-w-2xl space-y-6 ">
-		<Card className="w-full animate-fade-in-up">
-		<CardHeader>
-		<div className="mb-2 flex items-center justify-between"> 
-			
-		<span className="text-sm font-medium text-primary span-cart">
-		{questionInfo.topic}
-		</span>
-		<span className="text-sm text-muted-foreground">
-		{t.questionProgress[language]
-			.replace('{current}', String(currentQuestionIndex + 1))
-			.replace('{total}', String(totalQuestions))}
-			</span>
-			</div>
-			<CardTitle className="font-headline text-2xl cart-title">
-			{questionTitle}
-			</CardTitle>
-			<CardDescription className="pt-2 text-lg cart-description">
-			{questionText}
-			</CardDescription>
-			</CardHeader>
-			<CardContent>
-			<form onSubmit={handleSubmit}>
-			<div className="input-flex">
-			{questionInfo.options.map((option) => (
-				<Button
-				key={option.de}
-				type="button"
-				variant={
-					selectedAnswers.includes(option[language]) ? 'default' : 'outline'
-				}
-				onClick={() => setSelectedAnswers([option[language]])} // Single choice
-				className="h-auto justify-start whitespace-normal py-3 text-left"
-				>
-				{option[language]}
-				</Button>
-			))}
-			</div>
-			</form>
-			</CardContent>
-			<CardFooter>
-			<Button
-			onClick={handleSubmit}
-			type="submit"
-			className="w-full"
-			disabled={selectedAnswers.length === 0}
-			>
-			{t.continueButton[language]} <ArrowRight className="ml-2 h-4 w-4" />
-			</Button>
-			</CardFooter>
-			</Card>
-			
-			</div></div><div className='process'>
+  // ✅ ALL hooks first (no conditions)
+  const [questions, setQuestions] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadQuestions = async () => {
+      try {
+        const res = await apiGet({
+          action: 'getQuestions',
+          language,
+        });
+
+        if (res.success) {
+          setQuestions(res.questions);
+        }
+      } catch (err) {
+        console.error('Failed to fetch questions', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadQuestions();
+  }, [language]);
+
+  // ✅ useMemo MUST be before any return
+  const relevantQuestions = useMemo(() => {
+    if (session?.questionIds?.length) {
+      return session.questionIds
+        .map(id => questions.find(q => q.id === id))
+        .filter(Boolean);
+    }
+    return questions.slice(0, 10); // fallback
+  }, [session?.questionIds, questions]);
+
+  // ✅ now safe to early-return
+  if (!session || !userRole) return null;
+  if (loading) return <div>Loading questions...</div>;
+
+  const totalQuestionsPerPart = relevantQuestions.length;
+  if (totalQuestionsPerPart === 0) {
+    return <div>{t.noQuestionsError[language]}</div>;
+  }
+
+  const totalQuestions = totalQuestionsPerPart * 2;
+  const currentIndex = userAnswers.length;
+  if (currentIndex >= totalQuestions) return null;
+
+  const isSelfPart = currentIndex < totalQuestionsPerPart;
+  const questionIndex = isSelfPart
+    ? currentIndex
+    : currentIndex - totalQuestionsPerPart;
+
+  const question = relevantQuestions[questionIndex];
+  if (!question) return <div>Loading question...</div>;
+
+  const partnerName =
+    userRole === 'A' ? session.userBName : session.userAName;
+
+  const questionText = isSelfPart
+    ? question.selfQuestion
+    : question.guessQuestion.replace('{partnerName}', partnerName);
+
+  const questionTitle = isSelfPart
+    ? t.selfQuestionTitle[language]
+    : t.partnerQuestionTitle[language].replace('{partnerName}', partnerName);
+
+  const options = [
+    question.option1,
+    question.option2,
+    question.option3,
+    question.option4,
+  ];
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedAnswer) return;
+
+  addAnswer({
+  questionId: question.id,
+  topic: 'quiz',
+  question: questionText,
+  questionType: isSelfPart ? 'self' : 'guess',
+  answer: selectedAnswer,
+});
+
+    setSelectedAnswer(null);
+  };
+
+  const userProgress = (userAnswers.length / totalQuestions) * 100;
+  const partnerProgress = (partnerAnswers.length / totalQuestions) * 100;
+
+  return (
+    <div className="question-row">
+      <ValentineBackground />
+      <QuizSidebar />
+
+      <div className="question-div">
+        <div className="container-cart question-margin">
+          <div className="mx-auto w-full max-w-2xl space-y-6">
+            <Card>
+              <CardHeader>
+                <div className="mb-2 flex justify-between">
+                  <span>{question.topic}</span>
+                  <span>
+                    {currentIndex + 1}/{totalQuestions}
+                  </span>
+                </div>
+                <CardTitle>{questionTitle}</CardTitle>
+                <CardDescription>{questionText}</CardDescription>
+              </CardHeader>
+
+              <CardContent>
+                <form onSubmit={handleSubmit}>
+                  <div className="input-flex">
+                    {options.map(option => (
+                      <Button
+                        key={option}
+                        type="button"
+                        variant={
+                          selectedAnswer === option
+                            ? 'default'
+                            : 'outline'
+                        }
+                        onClick={() => setSelectedAnswer(option)}
+                      >
+                        {option}
+                      </Button>
+                    ))}
+                  </div>
+                </form>
+              </CardContent>
+
+              <CardFooter>
+                <Button
+                  type="submit"
+                  onClick={handleSubmit}
+                  disabled={!selectedAnswer}
+                >
+                  {t.continueButton[language]}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </CardFooter>
+            </Card>
+          </div>
+        </div>
+<div className='process'>
 			<Card>
 			<CardContent className="space-y-3 p-4">
 			<div>
@@ -182,8 +208,7 @@ export function QuestionStep() {
 			)}
 			</CardContent>
 			</Card></div>
-			</div>	</div>
-			
-		);
-	}
-	
+      </div>
+    </div>
+  );
+}
